@@ -1,0 +1,387 @@
+Namespace(corpus='mrda', mode='train', nclass=5, batch_size=4, batch_size_val=2, emb_batch=256, epochs=100, gpu='0,1', lr=0.0001, nlayer=1, chunk_size=350, dropout=0.5, speaker_info='none', topic_info='none', nfinetune=1, seed=0)
+wandb: Currently logged in as: sinaro (sinaroaml) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.10
+wandb: Run data is saved locally in /home/sly/text-analytics/shared_task/wandb/run-20250506_172046-6292p3kx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run mrda_run
+wandb: ⭐️ View project at https://wandb.ai/sinaroaml/dialogue-act-crf
+wandb: 🚀 View run at https://wandb.ai/sinaroaml/dialogue-act-crf/runs/6292p3kx
+Tokenizing train....
+Done
+Tokenizing val....
+Done
+Tokenizing test....
+Done
+Done
+
+Let's use 2 GPUs!
+Initializing model....
+Some weights of RobertaModel were not initialized from the model checkpoint at roberta-base and are newly initialized: ['pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/modules/rnn.py:123: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.5 and num_layers=1
+  warnings.warn(
+********************Epoch: 1********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 594.684
+Batch: 4/60	loss: 442.492
+Batch: 7/60	loss: 356.031
+Batch: 10/60	loss: 439.422
+Batch: 13/60	loss: 308.125
+Batch: 16/60	loss: 416.257
+Batch: 19/60	loss: 414.445
+Batch: 22/60	loss: 389.435
+Batch: 25/60	loss: 328.179
+Batch: 28/60	loss: 294.715
+Batch: 31/60	loss: 206.683
+Batch: 34/60	loss: 360.728
+Batch: 37/60	loss: 321.753
+Batch: 40/60	loss: 296.232
+Batch: 43/60	loss: 207.930
+Batch: 46/60	loss: 140.895
+Batch: 49/60	loss: 161.626
+Batch: 52/60	loss: 204.574
+Batch: 55/60	loss: 184.481
+Batch: 58/60	loss: 148.508
+Batch: 60/60	loss: 113.629
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torchcrf/__init__.py:305: UserWarning: where received a uint8 condition tensor. This behavior is deprecated and will be removed in a future version of PyTorch. Use a boolean condition instead. (Triggered internally at /pytorch/aten/src/ATen/native/TensorCompare.cpp:611.)
+  score = torch.where(mask[i].unsqueeze(1), next_score, score)
+Epoch 1	Train Loss: 293.825	Val Acc: 0.853	Test Acc: 0.870
+Best Epoch: 1	Best Epoch Val Acc: 0.853	Best Epoch Test Acc: 0.870, Best Test Acc: 0.870
+
+********************Epoch: 2********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 131.757
+Batch: 4/60	loss: 91.685
+Batch: 7/60	loss: 114.525
+Batch: 10/60	loss: 102.539
+Batch: 13/60	loss: 90.651
+Batch: 16/60	loss: 116.909
+Batch: 19/60	loss: 76.992
+Batch: 22/60	loss: 117.758
+Batch: 25/60	loss: 122.200
+Batch: 28/60	loss: 116.922
+Batch: 31/60	loss: 116.911
+Batch: 34/60	loss: 112.592
+Batch: 37/60	loss: 136.849
+Batch: 40/60	loss: 104.197
+Batch: 43/60	loss: 103.464
+Batch: 46/60	loss: 113.299
+Batch: 49/60	loss: 109.834
+Batch: 52/60	loss: 111.308
+Batch: 55/60	loss: 97.397
+Batch: 58/60	loss: 107.719
+Batch: 60/60	loss: 52.266
+Epoch 2	Train Loss: 107.234	Val Acc: 0.879	Test Acc: 0.894
+Best Epoch: 2	Best Epoch Val Acc: 0.879	Best Epoch Test Acc: 0.894, Best Test Acc: 0.894
+
+********************Epoch: 3********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 80.838
+Batch: 4/60	loss: 59.912
+Batch: 7/60	loss: 97.748
+Batch: 10/60	loss: 59.306
+Batch: 13/60	loss: 107.842
+Batch: 16/60	loss: 116.442
+Batch: 19/60	loss: 78.882
+Batch: 22/60	loss: 69.338
+Batch: 25/60	loss: 70.653
+Batch: 28/60	loss: 115.387
+Batch: 31/60	loss: 91.676
+Batch: 34/60	loss: 80.413
+Batch: 37/60	loss: 93.839
+Batch: 40/60	loss: 107.942
+Batch: 43/60	loss: 100.593
+Batch: 46/60	loss: 99.656
+Batch: 49/60	loss: 99.046
+Batch: 52/60	loss: 92.536
+Batch: 55/60	loss: 93.315
+Batch: 58/60	loss: 77.184
+Batch: 60/60	loss: 88.858
+Epoch 3	Train Loss: 93.733	Val Acc: 0.883	Test Acc: 0.900
+Best Epoch: 3	Best Epoch Val Acc: 0.883	Best Epoch Test Acc: 0.900, Best Test Acc: 0.900
+
+********************Epoch: 4********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 84.417
+Batch: 4/60	loss: 93.130
+Batch: 7/60	loss: 97.635
+Batch: 10/60	loss: 77.804
+Batch: 13/60	loss: 97.577
+Batch: 16/60	loss: 101.991
+Batch: 19/60	loss: 92.386
+Batch: 22/60	loss: 70.240
+Batch: 25/60	loss: 93.925
+Batch: 28/60	loss: 96.595
+Batch: 31/60	loss: 42.900
+Batch: 34/60	loss: 80.093
+Batch: 37/60	loss: 94.558
+Batch: 40/60	loss: 80.665
+Batch: 43/60	loss: 87.970
+Batch: 46/60	loss: 92.936
+Batch: 49/60	loss: 107.239
+Batch: 52/60	loss: 83.542
+Batch: 55/60	loss: 100.947
+Batch: 58/60	loss: 113.045
+Batch: 60/60	loss: 116.436
+Epoch 4	Train Loss: 88.675	Val Acc: 0.885	Test Acc: 0.901
+Best Epoch: 4	Best Epoch Val Acc: 0.885	Best Epoch Test Acc: 0.901, Best Test Acc: 0.901
+
+********************Epoch: 5********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 90.019
+Batch: 4/60	loss: 83.680
+Batch: 7/60	loss: 73.225
+Batch: 10/60	loss: 71.155
+Batch: 13/60	loss: 85.338
+Batch: 16/60	loss: 112.816
+Batch: 19/60	loss: 57.896
+Batch: 22/60	loss: 62.699
+Batch: 25/60	loss: 85.220
+Batch: 28/60	loss: 100.079
+Batch: 31/60	loss: 67.312
+Batch: 34/60	loss: 94.634
+Batch: 37/60	loss: 80.055
+Batch: 40/60	loss: 94.704
+Batch: 43/60	loss: 80.685
+Batch: 46/60	loss: 103.511
+Batch: 49/60	loss: 81.820
+Batch: 52/60	loss: 108.456
+Batch: 55/60	loss: 78.117
+Batch: 58/60	loss: 108.781
+Batch: 60/60	loss: 121.522
+Epoch 5	Train Loss: 86.365	Val Acc: 0.883	Test Acc: 0.900
+Best Epoch: 4	Best Epoch Val Acc: 0.885	Best Epoch Test Acc: 0.901, Best Test Acc: 0.901
+
+********************Epoch: 6********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 87.337
+Batch: 4/60	loss: 90.010
+Batch: 7/60	loss: 84.608
+Batch: 10/60	loss: 64.284
+Batch: 13/60	loss: 90.610
+Batch: 16/60	loss: 88.520
+Batch: 19/60	loss: 79.923
+Batch: 22/60	loss: 74.008
+Batch: 25/60	loss: 85.681
+Batch: 28/60	loss: 73.152
+Batch: 31/60	loss: 117.528
+Batch: 34/60	loss: 92.013
+Batch: 37/60	loss: 115.598
+Batch: 40/60	loss: 78.212
+Batch: 43/60	loss: 43.418
+Batch: 46/60	loss: 93.507
+Batch: 49/60	loss: 94.546
+Batch: 52/60	loss: 84.534
+Batch: 55/60	loss: 76.953
+Batch: 58/60	loss: 114.324
+Batch: 60/60	loss: 52.692
+Epoch 6	Train Loss: 84.602	Val Acc: 0.886	Test Acc: 0.902
+Best Epoch: 6	Best Epoch Val Acc: 0.886	Best Epoch Test Acc: 0.902, Best Test Acc: 0.902
+
+********************Epoch: 7********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 90.270
+Batch: 4/60	loss: 50.217
+Batch: 7/60	loss: 76.727
+Batch: 10/60	loss: 82.605
+Batch: 13/60	loss: 100.490
+Batch: 16/60	loss: 86.385
+Batch: 19/60	loss: 85.676
+Batch: 22/60	loss: 83.359
+Batch: 25/60	loss: 55.884
+Batch: 28/60	loss: 98.550
+Batch: 31/60	loss: 107.095
+Batch: 34/60	loss: 92.452
+Batch: 37/60	loss: 92.023
+Batch: 40/60	loss: 91.959
+Batch: 43/60	loss: 92.802
+Batch: 46/60	loss: 98.440
+Batch: 49/60	loss: 92.399
+Batch: 52/60	loss: 98.719
+Batch: 55/60	loss: 72.580
+Batch: 58/60	loss: 81.474
+Batch: 60/60	loss: 120.680
+Epoch 7	Train Loss: 83.890	Val Acc: 0.885	Test Acc: 0.903
+Best Epoch: 6	Best Epoch Val Acc: 0.886	Best Epoch Test Acc: 0.902, Best Test Acc: 0.903
+
+********************Epoch: 8********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 87.125
+Batch: 4/60	loss: 76.860
+Batch: 7/60	loss: 39.074
+Batch: 10/60	loss: 85.084
+Batch: 13/60	loss: 90.266
+Batch: 16/60	loss: 87.661
+Batch: 19/60	loss: 111.187
+Batch: 22/60	loss: 45.196
+Batch: 25/60	loss: 89.209
+Batch: 28/60	loss: 86.130
+Batch: 31/60	loss: 70.966
+Batch: 34/60	loss: 67.414
+Batch: 37/60	loss: 115.438
+Batch: 40/60	loss: 70.892
+Batch: 43/60	loss: 74.317
+Batch: 46/60	loss: 78.210
+Batch: 49/60	loss: 86.019
+Batch: 52/60	loss: 83.105
+Batch: 55/60	loss: 81.901
+Batch: 58/60	loss: 85.687
+Batch: 60/60	loss: 75.995
+Epoch 8	Train Loss: 82.360	Val Acc: 0.887	Test Acc: 0.904
+Best Epoch: 8	Best Epoch Val Acc: 0.887	Best Epoch Test Acc: 0.904, Best Test Acc: 0.904
+
+********************Epoch: 9********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 86.993
+Batch: 4/60	loss: 86.517
+Batch: 7/60	loss: 69.789
+Batch: 10/60	loss: 56.897
+Batch: 13/60	loss: 81.006
+Batch: 16/60	loss: 80.185
+Batch: 19/60	loss: 72.002
+Batch: 22/60	loss: 101.006
+Batch: 25/60	loss: 91.164
+Batch: 28/60	loss: 95.675
+Batch: 31/60	loss: 69.621
+Batch: 34/60	loss: 83.937
+Batch: 37/60	loss: 91.799
+Batch: 40/60	loss: 82.545
+Batch: 43/60	loss: 64.332
+Batch: 46/60	loss: 90.054
+Batch: 49/60	loss: 81.390
+Batch: 52/60	loss: 63.427
+Batch: 55/60	loss: 73.804
+Batch: 58/60	loss: 83.725
+Batch: 60/60	loss: 93.047
+Epoch 9	Train Loss: 81.206	Val Acc: 0.888	Test Acc: 0.905
+Best Epoch: 9	Best Epoch Val Acc: 0.888	Best Epoch Test Acc: 0.905, Best Test Acc: 0.905
+
+********************Epoch: 10********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 76.170
+Batch: 4/60	loss: 80.914
+Batch: 7/60	loss: 29.757
+Batch: 10/60	loss: 85.817
+Batch: 13/60	loss: 58.371
+Batch: 16/60	loss: 73.372
+Batch: 19/60	loss: 104.192
+Batch: 22/60	loss: 72.868
+Batch: 25/60	loss: 89.219
+Batch: 28/60	loss: 86.230
+Batch: 31/60	loss: 91.646
+Batch: 34/60	loss: 70.592
+Batch: 37/60	loss: 80.016
+Batch: 40/60	loss: 65.370
+Batch: 43/60	loss: 80.628
+Batch: 46/60	loss: 65.570
+Batch: 49/60	loss: 58.685
+Batch: 52/60	loss: 67.967
+Batch: 55/60	loss: 48.909
+Batch: 58/60	loss: 80.321
+Batch: 60/60	loss: 52.915
+Epoch 10	Train Loss: 80.431	Val Acc: 0.887	Test Acc: 0.904
+Best Epoch: 9	Best Epoch Val Acc: 0.888	Best Epoch Test Acc: 0.905, Best Test Acc: 0.905
+
+********************Epoch: 11********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 73.261
+Batch: 4/60	loss: 98.943
+Batch: 7/60	loss: 87.882
+Batch: 10/60	loss: 68.423
+Batch: 13/60	loss: 41.176
+Batch: 16/60	loss: 63.038
+Batch: 19/60	loss: 83.486
+Batch: 22/60	loss: 83.181
+Batch: 25/60	loss: 90.027
+Batch: 28/60	loss: 67.470
+Batch: 31/60	loss: 103.726
+Batch: 34/60	loss: 97.024
+Batch: 37/60	loss: 75.174
+Batch: 40/60	loss: 59.164
+Batch: 43/60	loss: 75.294
+Batch: 46/60	loss: 74.062
+Batch: 49/60	loss: 89.686
+Batch: 52/60	loss: 84.936
+Batch: 55/60	loss: 73.830
+Batch: 58/60	loss: 77.250
+Batch: 60/60	loss: 78.331
+Epoch 11	Train Loss: 79.796	Val Acc: 0.889	Test Acc: 0.903
+Best Epoch: 11	Best Epoch Val Acc: 0.889	Best Epoch Test Acc: 0.903, Best Test Acc: 0.905
+
+********************Epoch: 12********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 69.948
+Batch: 4/60	loss: 90.962
+Batch: 7/60	loss: 82.188
+Batch: 10/60	loss: 70.351
+Batch: 13/60	loss: 106.616
+Batch: 16/60	loss: 97.727
+Batch: 19/60	loss: 77.347
+Batch: 22/60	loss: 69.257
+Batch: 25/60	loss: 88.128
+Batch: 28/60	loss: 73.460
+Batch: 31/60	loss: 65.646
+Batch: 34/60	loss: 81.226
+Batch: 37/60	loss: 75.455
+Batch: 40/60	loss: 86.367
+Batch: 43/60	loss: 89.174
+Batch: 46/60	loss: 82.858
+Batch: 49/60	loss: 77.470
+Batch: 52/60	loss: 83.343
+Batch: 55/60	loss: 45.936
+Batch: 58/60	loss: 70.983
+Batch: 60/60	loss: 88.047
+Epoch 12	Train Loss: 79.872	Val Acc: 0.888	Test Acc: 0.905
+Best Epoch: 11	Best Epoch Val Acc: 0.889	Best Epoch Test Acc: 0.903, Best Test Acc: 0.905
+
+********************Epoch: 13********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 61.016
+Batch: 4/60	loss: 85.342
+Batch: 7/60	loss: 81.896
+Batch: 10/60	loss: 58.463
+Batch: 13/60	loss: 75.874
+Batch: 16/60	loss: 65.549
+Batch: 19/60	loss: 99.018
+Batch: 22/60	loss: 74.277
+Batch: 25/60	loss: 90.325
+Batch: 28/60	loss: 90.126
+Batch: 31/60	loss: 90.294
+Batch: 34/60	loss: 66.766
+Batch: 37/60	loss: 77.083
+Batch: 40/60	loss: 63.883
+Batch: 43/60	loss: 104.843
+Batch: 46/60	loss: 82.242
+Batch: 49/60	loss: 69.319
+Batch: 52/60	loss: 72.623
+Batch: 55/60	loss: 83.622
+Batch: 58/60	loss: 90.754
+Batch: 60/60	loss: 74.729
+Epoch 13	Train Loss: 79.025	Val Acc: 0.886	Test Acc: 0.904
+Best Epoch: 11	Best Epoch Val Acc: 0.889	Best Epoch Test Acc: 0.903, Best Test Acc: 0.905
+
+********************Epoch: 14********************
+/home/sly/.conda/envs/cs5293/lib/python3.10/site-packages/torch/nn/parallel/_functions.py:71: UserWarning: Was asked to gather along dimension 0, but all input tensors were scalars; will instead unsqueeze and return a vector.
+  warnings.warn(
+Batch: 1/60	loss: 85.958
+Batch: 4/60	loss: 79.061
+Batch: 7/60	loss: 80.508
+Batch: 10/60	loss: 72.717
+Batch: 13/60	loss: 75.955
+Batch: 16/60	loss: 75.437
+Batch: 19/60	loss: 51.197
+Batch: 22/60	loss: 97.565
+Batch: 25/60	loss: 86.352
