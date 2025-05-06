@@ -1,1 +1,5 @@
 text-analytics-homework/
+/__pycache__
+/ckp
+/processed_data
+/wandb

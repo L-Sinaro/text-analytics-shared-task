@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import os
 import numpy as np
+import wandb
 from datasets import data_loader
 from models import BertRNN
 from sklearn.metrics import accuracy_score
@@ -51,7 +52,7 @@ class Engine:
         model.to(device)
         params = model.parameters()
 
-        from transformers import AdamW
+        from torch.optim import AdamW
         optimizer = AdamW(params, lr=args.lr, weight_decay=5e-4)
         criterion = nn.CrossEntropyLoss(ignore_index=-1)
 
@@ -63,6 +64,9 @@ class Engine:
         self.val_loader = val_loader
         self.test_loader = test_loader
         self.args = args
+
+        if args.mode == 'train':
+            wandb.init(project="dialogue-act-classification", config=vars(args))
 
     def train(self):
         best_epoch = 0
@@ -85,6 +89,17 @@ class Engine:
             print(f'Epoch {epoch + 1}\tTrain Loss: {loss:.3f}\tVal Acc: {acc:.3f}\tTest Acc: {test_acc:.3f}\n'
                   f'Best Epoch: {best_epoch + 1}\tBest Epoch Val Acc: {best_epoch_acc:.3f}\t'
                   f'Best Epoch Test Acc: {best_epoch_test_acc:.3f}, Best Test Acc: {best_acc:.3f}\n')
+
+            wandb.log({
+                'epoch': epoch + 1,
+                'train_loss': loss,
+                'val_acc': acc,
+                'test_acc': test_acc,
+                'best_epoch': best_epoch + 1,
+                'best_val_acc': best_epoch_acc,
+                'best_test_acc': best_epoch_test_acc
+            })
+
             if epoch - best_epoch >= 10:
                 break
 
@@ -93,6 +108,7 @@ class Engine:
         self.model.load_state_dict(best_state_dict)
         acc = self.eval(False)
         print(f'Test Acc: {acc:.3f}')
+        wandb.save(f"ckp/model_{self.args.corpus}.pt")
 
     def train_epoch(self):
         self.model.train()
@@ -150,13 +166,7 @@ class Engine:
         return acc
 
     def inference(self):
-        ## using the trained model to inference on a new unseen dataset
-
-        # load the saved checkpoint
-        # change the model name to whatever the checkpoint is named
         self.model.load_state_dict(torch.load('ckp/model.pt'))
-
-        # make predictions
         self.eval(val=False, inference=True)
 
 
