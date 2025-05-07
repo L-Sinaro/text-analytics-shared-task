@@ -127,7 +127,7 @@ class DialogueActData(Dataset):
         item = {
             'input_ids': torch.tensor(self.input_ids[index]),
             'attention_mask': torch.tensor(self.attention_mask[index]),
-            'labels': torch.tensor(self.labels[index]),
+            'labels': torch.tensor(self.labels[index], dtype=torch.long),
             'chunk_lens': torch.tensor(self.chunk_lens[index]),
             'speaker_ids': torch.tensor(self.speaker_ids[index], dtype=torch.long),
             'topic_labels': torch.tensor(self.topic_labels[index], dtype=torch.long)
