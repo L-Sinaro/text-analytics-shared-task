@@ -63,8 +63,8 @@ python run_{dataset_name}.py
 }
 ```
 
-## CS-5293 Tasks
+## CS-5293 Files
 
-- No preprocessing needed for the current datasets.
-- Run the base code to benchmark base performance.
-- Test attention layers an  CRF layers.
+- LLM_inference.py is the Deepseek runs `python LLM_inference.py`
+- bert_gatin_crf folder contains the gating mechanisms and gating models
+- The `attn` Python files run the attention layers models
