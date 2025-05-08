@@ -17,21 +17,15 @@ class BertRNNAttn(nn.Module):
         if nfinetune > 0:
             for param in self.bert.pooler.parameters():
                 param.requires_grad = True
-            for i in range(n_layers-1, n_layers-1-nfinetune, -1):
+            for i in range(n_layers - 1, n_layers - 1 - nfinetune, -1):
                 for param in self.bert.encoder.layer[i].parameters():
                     param.requires_grad = True
 
-        # RNN encoder
         self.encoder = nn.GRU(nhid, nhid // 2, num_layers=nlayer, dropout=dropout, bidirectional=True)
-
-        # Attention layer
         self.attn_fc = nn.Linear(nhid, 1)
         self.dropout = nn.Dropout(p=dropout)
-
-        # Classifier
         self.fc = nn.Linear(nhid, nclass)
 
-        # Speaker and topic embeddings
         self.speaker_emb = nn.Embedding(3, nhid)
         self.topic_emb = nn.Embedding(100, nhid)
 
@@ -51,46 +45,44 @@ class BertRNNAttn(nn.Module):
         attention_mask = attention_mask.reshape(-1, seq_len)
 
         if self.training or self.emb_batch == 0:
-            embeddings = self.bert(input_ids, attention_mask=attention_mask,
-                                   output_hidden_states=True)[0][:, 0]
+            embeddings = self.bert(input_ids, attention_mask=attention_mask, output_hidden_states=True)[0][:, 0]
         else:
             embeddings_ = []
             dataset2 = TensorDataset(input_ids, attention_mask)
             loader = DataLoader(dataset2, batch_size=self.emb_batch)
             for _, batch in enumerate(loader):
-                embeddings = self.bert(batch[0], attention_mask=batch[1], output_hidden_states=True)[0][:, 0]
-                embeddings_.append(embeddings)
+                emb = self.bert(batch[0], attention_mask=batch[1], output_hidden_states=True)[0][:, 0]
+                embeddings_.append(emb)
             embeddings = torch.cat(embeddings_, dim=0)
 
         nhid = embeddings.shape[-1]
 
         if self.speaker_info == 'emb_cls':
             speaker_embeddings = self.speaker_emb(speaker_ids)
-            embeddings = embeddings + speaker_embeddings
+            embeddings += speaker_embeddings
         if self.topic_info == 'emb_cls':
             topic_embeddings = self.topic_emb(topic_labels)
-            embeddings = embeddings + topic_embeddings
+            embeddings += topic_embeddings
 
-        embeddings = embeddings.reshape(-1, chunk_size, nhid)
-        embeddings = embeddings.permute(1, 0, 2)  # (chunk_size, bs, emb_dim)
+        embeddings = embeddings.reshape(-1, chunk_size, nhid).permute(1, 0, 2)
 
-        embeddings = pack_padded_sequence(embeddings, chunk_lens, enforce_sorted=False)
+        packed_input = pack_padded_sequence(embeddings, chunk_lens, enforce_sorted=False)
         self.encoder.flatten_parameters()
-        outputs, _ = self.encoder(embeddings)
+        outputs, _ = self.encoder(packed_input)
         outputs, _ = pad_packed_sequence(outputs)
 
         if outputs.shape[0] < chunk_size:
-            outputs_padding = torch.zeros(chunk_size - outputs.shape[0], batch_size, nhid, device=outputs.device)
-            outputs = torch.cat([outputs, outputs_padding], dim=0)
+            pad = torch.zeros(chunk_size - outputs.shape[0], batch_size, nhid, device=outputs.device)
+            outputs = torch.cat([outputs, pad], dim=0)
 
         outputs = self.dropout(outputs)
 
-        # Attention mechanism
-        attn_scores = self.attn_fc(outputs)  # (chunk_size, bs, 1)
-        attn_weights = torch.softmax(attn_scores, dim=0)  # (chunk_size, bs, 1)
-        context = torch.sum(attn_weights * outputs, dim=0)  # (bs, nhid)
+        # Attention per time step (utterance-level attention)
+        attn_scores = self.attn_fc(outputs)              # (chunk_size, bs, 1)
+        attn_weights = torch.softmax(attn_scores, dim=0) # (chunk_size, bs, 1)
+        attn_outputs = outputs * attn_weights            # apply attention
+        attn_outputs = attn_outputs.permute(1, 0, 2)     # (bs, chunk_size, nhid)
+        attn_outputs = attn_outputs.reshape(-1, nhid)    # (bs * chunk_size, nhid)
 
-        context = self.dropout(context)
-        logits = self.fc(context)  # (bs, nclass)
-
+        logits = self.fc(attn_outputs)                   # (bs * chunk_size, nclass)
         return logits
